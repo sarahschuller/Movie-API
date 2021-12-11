@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/sarahschuller/Movie-API/issues"
   },
-  "homepage": "https://github.com/sarahschuller/Movie-API#readme"
+  "homepage": "https://github.com/sarahschuller/Movie-API#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }
