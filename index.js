@@ -1,6 +1,10 @@
 const express = require('express'); //load express module
 const app = express();
 
+//initialize and use morgan app
+const morgan = require('morgan');
+app.use(morgan('common'));
+
 //top 10 movies array
 let movies=[
   {
@@ -53,6 +57,11 @@ app.get('/movies', (req, res) =>{
 app.get('/', (req, res) =>{
   res.send('Welcome to my Horror Movie App!');
 });
+
+app.use(express.static('public', {
+  extensions:['html'],
+}));
+
 
 //app listener
 app.listen(8080, () => {
