@@ -9,43 +9,53 @@ app.use(morgan('common'));
 let movies=[
   {
     title: 'Suspiria',
-    year: '1977'
+    year: '1977',
+    rating: 'R',
   },
   {
     title: 'A Nightmare on Elm Street',
-    year: 1984
+    year: 1984,
+    rating: 'R'
   },
   {
     title: 'Get Out',
-    year: 2017
+    year: 2017,
+    rating: 'R',
   },
   {
     title: 'Hereditary',
-    year: 2018
+    year: 2018,
+    rating: 'R',
   },
   {
     title: 'It',
-    year: 2017
+    year: 2017,
+    rating: 'R',
   },
   {
     title: 'Midsommar',
-    year: 2019
+    year: 2019,
+    rating: 'R',
   },
   {
     title: 'Carrie',
-    year: 1976
+    year: 1976,
+    rating: 'R',
   },
   {
-    title:'Train to Busan (Busanhaeng)',
-    year: 2016
+    title:'The Witches',
+    year: 1990,
+    rating: 'PG',
   },
   {
     title:'Halloween',
-    year: 1978
+    year: 1978,
+    rating: 'R',
   },
   {
-    title:'Misery',
-    year: 1990
+    title:'Little Shop of Horrors',
+    year: 1986,
+    rating: 'PG-13',
   },
 ];
 
