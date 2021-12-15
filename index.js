@@ -44,3 +44,17 @@ let movies=[
     year: 1990
   },
 ];
+
+//GET requests
+app.get('/movies', (req, res) =>{
+  res.json(movies);
+});
+
+app.get('/', (req, res) =>{
+  res.send('Welcome to my Horror Movie App!');
+});
+
+//app listener
+app.listen(8080, () => {
+  console.log('This app is listening on port 8080.');
+});
