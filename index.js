@@ -62,6 +62,11 @@ app.use(express.static('public', {
   extensions:['html'],
 }));
 
+//error handling middleware function
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Oops, this looks broken!');
+});
 
 //app listener
 app.listen(8080, () => {
