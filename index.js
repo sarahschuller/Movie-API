@@ -59,13 +59,59 @@ let movies=[
   },
 ];
 
-//GET requests
+//Returns a list of all movies to the user
 app.get('/movies', (req, res) =>{
   res.json(movies);
 });
 
+//Returns a generic text response to the user
 app.get('/', (req, res) =>{
   res.send('Welcome to my Horror Movie App!');
+});
+
+//Get movies by title
+app.get('/movies/:title', (req, res) =>{
+  res.send('Movies by Title');
+});
+
+//Get movies by year
+app.get('/movies/:year',(req, res) => {
+  res.send('Movies by year');
+});
+
+//Get movies by genre
+app.get('/genres/:title', (req, res) => {
+  res.send('Genres by title')
+});
+
+//Get data about a director (bio, birth year, death year etc.) by name
+app.get('/directors/:name', (req, res) => {
+  res.send('Data about the director by name');
+});
+
+//Allow new users to register
+app.post('/users', (req, res) => {
+  res.send('New user has been registered');
+});
+
+//Allow users to update their user info(username)
+app.put('/users/:username', (req, res) => {
+  res.send('User information has been updated');
+});
+
+//Allow users to add a movie to their list of favorites(showing only a text that a movie has been added)
+app.post ('/users/:username/movies/:movieId', (req, res) => {
+  res.send('Movie has been added to user favorites');
+});
+
+//Allow users to remove a movie from their list of favorites(showing only a text that a movie has been removed)
+app.delete('/users/:username/movies/:movieId', (req, res) => {
+  res.send('Movie has been removed from favorites');
+});
+
+//Allow existing users to deregister (showing only a text that a user email has been removed)
+app.delete('/users/:username', (req, res) => {
+  res.send('Your account was successfully deleted');
 });
 
 app.use(express.static('public', {
