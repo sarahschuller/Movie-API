@@ -11,7 +11,102 @@
   <h1>Movie API</h1>
     <p>A web application that provides users with access to information about a variety of movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.
     </p>
-    <p>
-      </p>
+  <h1>Features</h1>
+  <h2>Homepage of Movie App</h2>
+  <p> Request Type: GET<br>
+    Request URL: / <br>
+  Message: Welcome to my Horror Movie App!<br>
+  </p>
+
+  <h2> Return a list of all movies to the user</h2>
+  <p>Request type: GET<br>
+    Request URL: /movies/:title<br>
+    Returns an array of movies within the database as a JSON object<br>
+  </p>
+
+  <h2> Return data about movies by title</h2>
+  <p>Request type: GET<br>
+    Request URL: /genres/:title<br>
+    Returns a JSON object with data (description, genre, director, year released) about a single movie by title<br>
+    <br>
+    Example response:<br>
+    <code>
+      {
+        title: "...",
+        year: "...",
+        genre: "...",
+        director: "...",
+        description: "..."
+      }
+    </code>
+  </p>
+
+  <h2> Return data about a director</h2>
+  <p> Request type: GET<br>
+    Request URL: /directors/:name<br>
+    Returns a JSON object with information/data about the movie's director <br>
+    Example response:<br>
+    <code>
+    {
+      director:"..."
+      birthday:"..."
+      bio:"..."
+    }
+    </code>
+  </p>
+
+  <h2> Register new users to the application</h2>
+  <p> Request type: POST<br>
+    Request URL: /users<br>
+    Create a JSON object with data about a newly registered user<br>
+    Example response:<br>
+    <code>
+      {
+        name: "John Doe"
+        username: "johndoe123"
+        email: "johndoe@example.com"
+        password: "abcd123"
+      }
+    </code>
+    Message Response: "New user has been registered"
+  </p>
+
+  <h2>Users are able to update their information</h2>
+  <p> Request type: PUT<br>
+    Request URL: /users/:username<br>
+    Example response:<br>
+    <code>
+      {
+        name: "John Doe"
+        age: 30
+        username: "johndoe123"
+        email: "johndoe@example.com"
+        password: "efgh456"
+      }
+    </code>
+    Message Response: "User information has been updated"
+  </p>
+
+  <h2>Allow users to add a movie to their favorites list</h2>
+  <p>Request type: POST<br>
+    Request URL: /users/:username/movies/:movieId<br>
+    Create a JSON object with data about a user's favorite movies<br>
+    Message response:"Movie has been added to user favorites"
+  </p>
+
+  <h2>Allow users to remove movies from their favorites list</h2>
+  <p>Request type: DELETE<br>
+    Request URL: /users/:username/movies/:movieId<br>
+    Removes an item from the JSON object with the user's list of favorite movies<br>
+    Message response: "Movie has been removed from favorites"
+  </p>
+
+  <h2>All current users to delete their registration</h2>
+  <p>Request type: DELETE<br>
+    Request URL: "/users"<br>
+    Removes a user account from the database<br>
+    Message response: "Your account was successfully deleted"
+  </p>
+
 </body>
 </html>
