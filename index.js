@@ -22,59 +22,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 app.use(morgan('common'));
 
-//top 10 movies array
-let movies=[
-  {
-    title: 'Suspiria',
-    year: '1977',
-    rating: 'R',
-  },
-  {
-    title: 'A Nightmare on Elm Street',
-    year: 1984,
-    rating: 'R'
-  },
-  {
-    title: 'Get Out',
-    year: 2017,
-    rating: 'R',
-  },
-  {
-    title: 'Hereditary',
-    year: 2018,
-    rating: 'R',
-  },
-  {
-    title: 'It',
-    year: 2017,
-    rating: 'R',
-  },
-  {
-    title: 'Midsommar',
-    year: 2019,
-    rating: 'R',
-  },
-  {
-    title: 'Carrie',
-    year: 1976,
-    rating: 'R',
-  },
-  {
-    title:'The Witches',
-    year: 1990,
-    rating: 'PG',
-  },
-  {
-    title:'Halloween',
-    year: 1978,
-    rating: 'R',
-  },
-  {
-    title:'Little Shop of Horrors',
-    year: 1986,
-    rating: 'PG-13',
-  },
-];
+
 
 //Returns a list of all movies to the user
 app.get('/movies', (req, res) =>{
