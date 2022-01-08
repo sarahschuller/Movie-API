@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true
-});mon
+});
 
 // import models.js file & the movie & user models
 const Models = require('./models.js');
@@ -12,6 +12,7 @@ const Users = Models.User;
 
 const express = require('express'); //load express module
 const app = express();
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -19,7 +20,6 @@ app.use(bodyParser.urlencoded({
 
 //initialize and use morgan app
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
 app.use(morgan('common'));
 
 
@@ -55,14 +55,16 @@ app.get('/directors/:name', (req, res) => {
 });
 
 // Add a user
-/* JSON format
+/* 
+// JSON format
 {
   ID: Integer,
   Username: String,
   Password: String,
   Email: String,
   Birthday: Date
-} */
+} 
+*/
 
 app.post('/users', (req, res) => {
   Users.findOne({Username: req.body.Username})
