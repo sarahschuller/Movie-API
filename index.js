@@ -61,6 +61,7 @@ app.get('/genres/:title', (req, res) => {
         console.error(err);
         res.status(500).send('Error' + err);
     });
+  });
 
 //Get data about a director (bio, birth year, death year etc.) by name
 app.get('/director/:name', (req, res) => {
