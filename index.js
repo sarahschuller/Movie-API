@@ -24,7 +24,7 @@ app.use(morgan('common'));
 
 //Returns a generic text response to the user
 app.get('/', (req, res) =>{
-  res.send('Welcome to my Horror Movie App!');
+  res.send('Welcome to my Movie App!');
 });
 
 //Returns a list of all movies to the user
@@ -65,7 +65,7 @@ app.get('/genres/:title', (req, res) => {
 
 //Get data about a director (bio, birth year, death year etc.) by name
 app.get('/director/:name', (req, res) => {
-  Movies.findOne({'Director.Name': req.params.directorName})
+  Movies.findOne({'Director.Name': req.params.Director})
     .then((movie)=>{
         res.json(movie.Director);
     })
@@ -115,12 +115,12 @@ app.post('/users', (req, res) => {
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.UserName + ' Already exists');
+        return res.status(400).send(req.body.Username + ' Already exists');
       } else {
         Users.create({
-            UserName: req.body.userName,
-            Password: req.body.password,
-            Email: req.body.email,
+            UserName: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
             Birthday: req.body.Birthday
           })
           .then((user) =>{res.status(201).json(user) })
@@ -191,7 +191,7 @@ app.delete('/users/:username/movies/:title', (req, res) => {
 
 //Allow existing users to delete their account (showing only a text that a user email has been removed)
 app.delete('/users/:username', (req, res) => {
-  Users.findOneAndRemove({ userName: req.params.deleteUser})
+  Users.findOneAndRemove({ Username: req.params.deleteUser})
     .then((user) =>{
         if (!user) {
             res.status(400).send(req.params.Username + ' was not found');
