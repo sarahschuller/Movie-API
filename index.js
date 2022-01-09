@@ -176,17 +176,17 @@ app.post('/Users/:Username/movies/:title', (req, res) => {
 //Allow users to remove a movie from their list of favorites(showing only a text that a movie has been removed)
 app.delete('/Users/:Username/movies/:title', (req, res) => {
   Users.findOneAndUpdate({Username: req.params.Username}, {
-      $pull: {FavoriteMovies: req.params.title}
+    $pull: {FavoriteMovies: req.params.title}
   },
   { new: true},
- (err, updatedUser) => {
-     if (err) {
-         console.error(err);
-         res.status(500).send('Error' + err);
-     } else {
-         res.json(updatedUser);
-     }
- });
+  (err, updatedUser) => {
+    if (err) {
+        console.error(err);
+        res.status(500).send('Error' + err);
+    } else {
+        res.json(updatedUser);
+    }
+  });
 });
 
 //Allow existing users to delete their account (showing only a text that a user email has been removed)
