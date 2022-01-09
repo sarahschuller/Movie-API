@@ -89,7 +89,7 @@ app.get('/users', (req, res) => {
 
 // Get User by Username
 app.get('/users/:Username', (req, res) => {
-  Users.findOne({ userName: req.params.Username})
+  Users.findOne({ Username: req.params.Username})
   .then((user) => {
       res.json(user);
   })
@@ -112,15 +112,15 @@ app.get('/users/:Username', (req, res) => {
 */
 
 app.post('/users', (req, res) => {
-  Users.findOne({ userName: req.body.userName })
+  Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.userName + ' Already exists');
+        return res.status(400).send(req.body.UserName + ' Already exists');
       } else {
         Users.create({
-            userName: req.body.userName,
-            password: req.body.password,
-            email: req.body.email,
+            UserName: req.body.userName,
+            Password: req.body.password,
+            Email: req.body.email,
             Birthday: req.body.Birthday
           })
           .then((user) =>{res.status(201).json(user) })
@@ -138,11 +138,11 @@ app.post('/users', (req, res) => {
 
 //Allow users to update their user info(username)
 app.put('/users/:username', (req, res) => {
-  Users.findOneAndUpdate({ userName: req.params.Username}, {$set:
+  Users.findOneAndUpdate({ Username: req.params.Username}, {$set:
     {
-        userName: req.body.userName,
-        password: req.body.password,
-        email: req.body.email,
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
         Birthday: req.body.Birthday
     }
 },
@@ -159,7 +159,7 @@ app.put('/users/:username', (req, res) => {
 
 //Allow users to add a movie to their list of favorites(showing only a text that a movie has been added)
 app.post('/users/:username/movies/:title', (req, res) => {
-  Users.findOneAndUpdate({userName: req.params.userName}, {
+  Users.findOneAndUpdate({Username: req.params.Username}, {
       $push: {FavoriteMovies: req.params.title}
   },
   { new: true},
@@ -175,7 +175,7 @@ app.post('/users/:username/movies/:title', (req, res) => {
 
 //Allow users to remove a movie from their list of favorites(showing only a text that a movie has been removed)
 app.delete('/users/:username/movies/:title', (req, res) => {
-  Users.findOneAndUpdate({userName: req.params.userName}, {
+  Users.findOneAndUpdate({userName: req.params.Username}, {
       $pull: {FavoriteMovies: req.params.title}
   },
   { new: true},
@@ -194,9 +194,9 @@ app.delete('/users/:username', (req, res) => {
   Users.findOneAndRemove({ userName: req.params.deleteUser})
     .then((user) =>{
         if (!user) {
-            res.status(400).send(req.params.userName + ' was not found');
+            res.status(400).send(req.params.Username + ' was not found');
         } else {
-            res.status(200).send(req.params.userName + ' was deleted');
+            res.status(200).send(req.params.Username + ' was deleted');
         }
     })
     .catch((err)=>{
