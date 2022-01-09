@@ -10,6 +10,7 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
+// Require express & body-parser
 const express = require('express'); //load express module
 const app = express();
 const bodyParser = require('body-parser');
@@ -17,6 +18,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+// require auth and passport and import passport file into index
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 //initialize and use morgan app
 const morgan = require('morgan');
