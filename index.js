@@ -42,18 +42,18 @@ app.get('/movies', (req, res) =>{
 //Get movies by title
 app.get('/movies/:title', (req, res) =>{
   Movies.findOne({Title: req.params.title})
-  .then((movie) =>{
-    res.json(movie);
-  })
-  .catch((err) =>{
-    console.error(err);
-    res.status(500).send('Error ' + err)
-  });
-});
+    .then((movie)=>{
+        res.json(movie);
+    })
+    .catch((err)=>{
+        console.error(err);
+        res.status(500).send('Error' + err);
+    });
+   });
 
 //Get movies by genre
-app.get('/genres/:title', (req, res) => {
-  Movies.findOne({'Genre.Name': req.params.genre})
+app.get('/genres/:genre', (req, res) => {
+  Movies.findOne({'Genre.Name': req.params.Genre})
     .then((movie)=>{
         res.json(movie.Genre)
     })
@@ -64,8 +64,8 @@ app.get('/genres/:title', (req, res) => {
   });
 
 //Get data about a director (bio, birth year, death year etc.) by name
-app.get('/director/:name', (req, res) => {
-  Movies.findOne({'Director.Name': req.params.Director})
+app.get('/directors/:directorName', (req, res) => {
+  Movies.findOne({'Director.Name': req.params.directorName})
     .then((movie)=>{
         res.json(movie.Director);
     })
@@ -137,7 +137,7 @@ app.post('/users', (req, res) => {
 });
 
 //Allow users to update their user info(username)
-app.put('/users/:username', (req, res) => {
+app.put('/users/:Username', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username}, {$set:
     {
         Username: req.body.Username,
@@ -158,7 +158,7 @@ app.put('/users/:username', (req, res) => {
 });
 
 //Allow users to add a movie to their list of favorites(showing only a text that a movie has been added)
-app.post('/users/:username/movies/:title', (req, res) => {
+app.post('/Users/:Username/movies/:title', (req, res) => {
   Users.findOneAndUpdate({Username: req.params.Username}, {
       $push: {FavoriteMovies: req.params.title}
   },
@@ -174,8 +174,8 @@ app.post('/users/:username/movies/:title', (req, res) => {
 });
 
 //Allow users to remove a movie from their list of favorites(showing only a text that a movie has been removed)
-app.delete('/users/:username/movies/:title', (req, res) => {
-  Users.findOneAndUpdate({userName: req.params.Username}, {
+app.delete('/Users/:Username/movies/:title', (req, res) => {
+  Users.findOneAndUpdate({Username: req.params.Username}, {
       $pull: {FavoriteMovies: req.params.title}
   },
   { new: true},
@@ -190,7 +190,7 @@ app.delete('/users/:username/movies/:title', (req, res) => {
 });
 
 //Allow existing users to delete their account (showing only a text that a user email has been removed)
-app.delete('/users/:username', (req, res) => {
+app.delete('/Users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.deleteUser})
     .then((user) =>{
         if (!user) {
