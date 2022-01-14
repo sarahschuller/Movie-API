@@ -26,6 +26,9 @@ app.use(cors({
   }
 }));
 
+// require express-validator
+const { check, validationResult } = require('express-validator');
+
 // require auth and passport and import passport file into index
 let auth = require('./auth')(app);
 const passport = require('passport');
