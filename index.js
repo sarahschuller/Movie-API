@@ -10,6 +10,27 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
+// require CORS
+const cors = require('cors');
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ 
+        // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application does not allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
+// require auth and passport and import passport file into index
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 // Require express & body-parser
 const express = require('express'); //load express module
 const app = express();
@@ -18,11 +39,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-// require auth and passport and import passport file into index
-let auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
 
 //initialize and use morgan app
 const morgan = require('morgan');
