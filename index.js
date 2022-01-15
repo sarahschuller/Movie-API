@@ -1,40 +1,47 @@
-// Require mongoose
+const bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
+const morgan = require('morgan');
 const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
 mongoose.connect('mongodb://127.0.0.1:27017/movies', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
-// import models.js file & the movie & user models
-const Models = require('./models.js');
-const Movies = Models.Movie;
-const Users = Models.User;
+// bodyParser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-// require CORS
+// logger
+app.use(morgan('common'));
+
+// import and use CORS
 const cors = require('cors');
+
+const allowedOrigins = ['http://localhost:8080'];
+
 app.use(cors());
 
-// require express-validator
-const { check, validationResult } = require('express-validator');
-
-// require auth and passport and import passport file into index
+// import auth.js file and pass express() to it.
 let auth = require('./auth')(app);
+
+// require passport module and import passport.js
 const passport = require('passport');
 require('./passport');
 
-// Require express & body-parser
-const express = require('express'); //load express module
-const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+// import express-validator 
+const {check, validationResult} = require('express-validator');
 
-//initialize and use morgan app
-const morgan = require('morgan');
-app.use(morgan('common'));
+// static file response documentation.html file
+app.use(express.static('public'));
+app.use('/documentation.html', express.static('public/documentation.html'));
 
+// GET REQUESTS START HERE
 
 //Returns a generic text response to the user
 app.get('/', (req, res) => {
@@ -115,32 +122,42 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 })
 
 // Add new user
-app.post('/users', (req, res) => {
-  let hashedPassword = Users.hashedPassword (req.body.Password);
-// Search to see if a user with the given username exists
+app.post('/users', [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non-alphanumeric characters, not allwed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be validated').isEmail()
+], (req, res) => {
+  // Check the validation object for errors
+  let errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  // Hash password
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })
-    .then((user) => {
-      if (user) { 
-// If user is found, send a message back that this username already exists
-        return res.status(400).send(req.body.Username + ' Already exists');
-      } else {
-        Users.create({
-            Username: req.body.Username,
-            Password: hashedPassword,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday
-          })
-          .then((user) =>{res.status(201).json(user) })
-        .catch((error) => {
+  .then((user) => {
+    if (user) {
+      return res.status(400).send(req.body.Username + ' already exists');
+    } else {
+      Users.create({
+        Username: req.body.Username,
+        Password: hashedPassword,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }).then(
+        (user) => { res.status(201).json(user) }
+      ).catch(
+        (error) => {
           console.error(error);
           res.status(500).send('Error: ' + error);
         })
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
+    }
+  }).catch((error) => {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  })
 });
 
 // Allow users to update their user information
@@ -211,11 +228,6 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
       res.status(500).send('Error' + err);
   });
 });
-
-
-app.use(express.static('public', {
-  extensions:['html'],
-}));
 
 //error handling middleware function
 app.use((err, req, res, next) => {
