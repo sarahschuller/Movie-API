@@ -28,8 +28,6 @@ app.use(morgan('common'));
 // import and use CORS
 const cors = require('cors');
 
-const allowedOrigins = ['http://localhost:8080'];
-
 app.use(cors());
 
 // import auth.js file and pass express() to it.
