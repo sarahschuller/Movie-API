@@ -8,10 +8,9 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-// mongoose.connect('mongodb://127.0.0.1:27017/movies', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
+/* mongoose.connect('mongodb://localhost:27017/driveInDB', {
+  useNewUrlParser: true, useUnifiedTopology: true
+}); */
 
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
@@ -27,6 +26,14 @@ app.use(morgan('common'));
 
 // import and use CORS
 const cors = require('cors');
+
+/* let allowedOrigins = [
+  "http://localhost:2000/",
+  "http://localhost:1234",
+  "http://localhost:4200",
+  "https://sarahschuller.github.io"
+];
+*/
 
 app.use(cors());
 
