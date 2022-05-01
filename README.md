@@ -1,7 +1,17 @@
 # Movie_API
  
-    <p>A web application that provides users with access to information about a variety of movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.
-    </p>
+ <h1>Objective</h1>
+    <p>A web application that provides users with access to information about a variety of movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.</p>
+    
+  <h1>Technology Used</h1>
+  <ul>
+ <li>Javascripit</li>
+ <li>Node</li>
+ <li>MongoDB</li>
+ <li>Express</li>
+ <li>Rest API</li>
+  </ul>
+    
   <h1>Features</h1>
   <table>
     <tr>
@@ -87,3 +97,5 @@
       <td>N/A</td>
     </tr>
   </table>
+  
+ 
